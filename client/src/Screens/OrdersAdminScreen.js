@@ -27,7 +27,7 @@ const OrdersAdminScreen = ({ history }) => {
   return (
     <>
       <Meta content='Orders Page' title='Recent Orders' />
-      <Table striped bordered hover responsive className='table-sm my-3'>
+      <Table striped bordered hover responsive className='table-sm'>
         <thead>
           <tr>
             <th scope='col'>ID</th>
@@ -62,7 +62,7 @@ const OrdersAdminScreen = ({ history }) => {
                   <i className='fas fa-times' style={{ color: "red" }}></i>
                 )}
               </td>
-              <td>{order.user.name}</td>
+              {order.user ? <td>{order.user.name}</td> : <td></td>}
             </tr>
           ))}
         </tbody>
