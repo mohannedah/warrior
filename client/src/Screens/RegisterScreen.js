@@ -9,7 +9,7 @@ import Meta from "../components/Meta";
 const RegisterScreen = ({ history }) => {
   const dispatch = useDispatch();
   const registerUser = useSelector((state) => state.registerUser);
-  const { user, loggedIn, errors, error, loading } = userInfo;
+  const { user, loggedIn, errors, error, loading } = registerUser;
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [passwordConfirm, setConf] = useState("");
