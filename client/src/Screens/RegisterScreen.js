@@ -6,7 +6,7 @@ import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
 import Meta from "../components/Meta";
 
-const RegisterScreen = ({ history }) => {
+const RegisterScreen = ({ history, location }) => {
   const dispatch = useDispatch();
   const registerUser = useSelector((state) => state.registerUser);
   const { user, loggedIn, errors, error, loading } = registerUser;
