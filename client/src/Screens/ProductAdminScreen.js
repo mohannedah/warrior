@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Button } from "react-bootstrap";
 import { deleteProductAction } from "../actions/productActions";
+import { Table } from "react-bootstrap";
 import {
   productActions,
   createProductAction,
@@ -54,7 +55,7 @@ const ProductAdminScreen = ({ history }) => {
           <i class='fas fa-plus mx-1'></i> Create Product
         </Button>
       </div>
-      <table class='table'>
+      <Table striped bordered hover responsive className='table-sm'>
         <thead class='thead'>
           <tr>
             <th scope='col'>ID</th>
@@ -101,7 +102,7 @@ const ProductAdminScreen = ({ history }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </>
   );
 };

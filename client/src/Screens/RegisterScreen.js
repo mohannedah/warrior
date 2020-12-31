@@ -16,8 +16,8 @@ const RegisterScreen = ({ history, location }) => {
   const [name, setName] = useState("");
 
   const onSubmit = (e) => {
-    dispatch(registerUser(email, password, name, passwordConfirm));
     e.preventDefault();
+    dispatch(registerUser(email, password, name, passwordConfirm));
   };
 
   const redirect = location.search ? location.search.split("=")[1] : "/";

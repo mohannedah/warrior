@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { Table } from "react-bootstrap";
 import { getAllOrders } from "../actions/orderActions";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -26,7 +27,7 @@ const OrdersAdminScreen = ({ history }) => {
   return (
     <>
       <Meta content='Orders Page' title='Recent Orders' />
-      <table class='table my-3'>
+      <Table striped bordered hover responsive className='table-sm my-3'>
         <thead>
           <tr>
             <th scope='col'>ID</th>
@@ -65,7 +66,7 @@ const OrdersAdminScreen = ({ history }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </>
   );
 };
