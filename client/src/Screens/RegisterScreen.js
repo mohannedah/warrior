@@ -20,11 +20,13 @@ const RegisterScreen = ({ history }) => {
     e.preventDefault();
   };
 
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
   useEffect(() => {
     if (loggedIn) {
       history.push("/");
     }
-  }, [history, loggedIn, error]);
+  }, [history, redirect, loggedIn, error]);
   return (
     <FormContainer>
       <Meta content='Register Page' title='Register an account' />

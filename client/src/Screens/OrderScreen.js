@@ -32,7 +32,7 @@ const OrderScreen = ({ match }) => {
   const { successPaypal, loadingPaypal } = payWithPaypal;
   const { delivered, loadingDeliver } = orderDeliver;
   const { user: userDetails } = userInfo2;
-  const [sdkReady, setSdkReady] = useState(true);
+  const [sdkReady, setSdkReady] = useState(false);
   // const order1 = useSelector((state) => state.order1);
   const { success } = payAnOrder;
   const { order, user, shippingAddress, orderItems, loading } = orderDetails;
@@ -199,10 +199,13 @@ const OrderScreen = ({ match }) => {
                           amount={order.totalPrice * 100}
                         />
                       ) : (
-                        <PayPalButton
-                          amount={order.totalPrice}
-                          onSuccess={onSuccess}
-                        ></PayPalButton>
+                        sdkReady == true && (
+                          <PayPalButton
+                            onButtonReady={() => setSdkReady(true)}
+                            amount={order.totalPrice}
+                            onSuccess={onSuccess}
+                          ></PayPalButton>
+                        )
                       )}
                     </ListGroup.Item>
                   )}
