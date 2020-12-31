@@ -26,7 +26,7 @@ app.get("/api/clientId", (req, res) => res.send(config.get("clientId")));
 // app.use("/api/auth", require("./routes/auth"));
 
 if (process.env.NODE_ENV === "production") {
-  app.use("/client" , express.static(path.join(__dirname, "/client/build")));
+  app.use(express.static(path.join(__dirname, "/client/build")));
 
   app.get("*", (req, res) =>
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
