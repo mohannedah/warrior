@@ -28,13 +28,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.5",
     "multer": "^1.4.2",
-    "react-loadingg": "^1.7.2",
-    "react-meta-tags": "^1.0.1",
-    "react-native": "^0.63.4",
-    "react-paypal-button-v2": "^2.6.2",
-    "react-router-bootstrap": "^0.25.0",
-    "react-stripe-checkout": "^2.6.3",
-    "redux-persist": "^6.0.0",
     "request": "^2.79.0",
     "stripe": "^8.129.0",
     "uuid": "^8.3.2"

@@ -48,7 +48,6 @@ exports.getOrder = async (req, res, next) => {
       return res.status(404).json({ msg: "No order with this ID" });
     }
 
-    decrementQTY(order);
     res.status(200).json(order);
   } catch (error) {
     console.error(error.message);
@@ -88,14 +87,6 @@ exports.payProduct = async (req, res) => {
     if (!order) {
       return res.status(404).json({ msg: "No order found with this id" });
     }
-
-    const products = await Product.find({});
-    orderID.map((id) => {
-      const product = products.map((p) => p._id === id);
-      const item = order.orderItems.filter((it) => it._id === id);
-      const quantity = item.filter((ite) => ite.qty);
-      console.log(product, quantity, item, orderID);
-    });
 
     // (product.countInStock =
     //   product.countInStock - order.orderItems.map((anItem) => anItem.qty)),
