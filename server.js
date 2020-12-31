@@ -11,7 +11,6 @@ dotenv.config();
 
 connection();
 app.use(express.json());
-app.get("/", (req, res) => res.send({ msg: "Hello from the server" }));
 
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
