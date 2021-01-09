@@ -1,7 +1,7 @@
 const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
 const stripe = require("stripe")(
-  "sk_test_51I0lA3D0OfQEoW0joiGxzRz3TrTZZc0FZm9DOrCL7U5IEKQ9DTOsfQrfxxuh59OhD3q639rFlQ3UHR8ZDiJafe3i00XwSIU1Ej"
+  "sk_test_51I6ziWHut03REFrTknXqJFaNkotZmgiC0Xo0HFflUlY53jeIq3fiQTELwDyTP1AOuN0Iw5mU2061KVmLLYBRqBgi00Yn5v0FHZ"
 );
 
 exports.createProduct = async (req, res, next) => {

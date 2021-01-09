@@ -1,76 +1,33 @@
 import "./App.css";
-import { Fragment } from "react";
-import { Container } from "react-bootstrap";
-import Header from "../src/components/Header";
-import Footer from "../src/components/Footer";
-import Home from "./Screens/Home";
-import ProductState from "./contexts/Product/productState";
-import ProductScreen from "./Screens/ProductScreen";
-import CartScreen from "./Screens/CartScreen";
-import UserState from "./contexts/User/userState";
-import loginScreen from "./Screens/loginScreen";
-import RegisterScreen from "./Screens/RegisterScreen";
-import ProfileScreen from "./Screens/ProfileScreen";
-import UserListScreen from "./Screens/UserListScreen";
-import OrderScreen from "./Screens/OrderScreen";
-import ShippingScreen from "./Screens/ShippingScreen";
-import PaymentScreen from "./Screens/PaymentScreen";
-import PlaceOrderScreen from "./Screens/PlaceOrderScreen";
-import UserEditScreen from "./Screens/UserEditScreen";
-import ProductAdminScreen from "./Screens/ProductAdminScreen";
-import OrdersAdminScreen from "./Screens/OrdersAdminScreen";
-import ProductEditScreen from "./Screens/ProductEditScreen";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import CartState from "./contexts/Cart/cartState";
-import OrderState from "./contexts/Order/OrderState";
+import Home from "./Screens/Home";
+import SignInScreen from "./Screens/SignInScreen";
+import GlobalStyle from "./globalStyles";
+import MovieScreen from "./Screens/moviesScreen";
+import RegisterScreen from "./Screens/registerScreen";
+import PricingScreen from "./Screens/PricingScreen";
+import PaymentScreen from "./Screens/PaymentScreen";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  "pk_test_51I6ziWHut03REFrTHaVyJ1XVCwetlYme8KA708roOq8CoVmbfqkOgKRavH2tfvz2a519eX5EBKEeiOO206udFBxW0075kTl56j"
+);
 
 function App() {
   return (
     <Router>
-      <ProductState>
-        <CartState>
-          <UserState>
-            <Header />
-            <main>
-              <Container>
-                <Route path='/' component={Home} exact />
-                <Route path='/product/:id' component={ProductScreen} exact />
-                <Route path='/cart/:id?' component={CartScreen} exact />
-                <Route path='/login' component={loginScreen} exact />
-                <Route path='/register' component={RegisterScreen} exact />
-                <Route path='/profile' component={ProfileScreen} exact />
-                <Route path='/shipping' component={ShippingScreen} exact />
-                <Route path='/payment' component={PaymentScreen} exact />
-                <Route path='/placeOrder' component={PlaceOrderScreen} exact />
-                <Route path='/order/:id' component={OrderScreen} exact />
-                <Route path='/admin/users' component={UserListScreen} exact />
-                <Route path='/search/:keyword' component={Home} exact />
-                <Route
-                  path='/admin/product/:id/edit'
-                  component={ProductEditScreen}
-                  exact
-                />
-                <Route
-                  path='/admin/products'
-                  component={ProductAdminScreen}
-                  exact
-                />
-                <Route
-                  path='/admin/user/:id'
-                  component={UserEditScreen}
-                  exact
-                />
-                <Route
-                  path='/admin/orders'
-                  component={OrdersAdminScreen}
-                  exact
-                />
-              </Container>
-            </main>
-            <Footer />
-          </UserState>
-        </CartState>
-      </ProductState>
+      <GlobalStyle />
+      <Route path='/' component={Home} exact />
+      <Route path='/signin' component={SignInScreen} exact />
+      <Route path='/signup' component={RegisterScreen} exact />
+      <Route path='/movies' component={MovieScreen} exact />
+      <Route path='/pricing' component={PricingScreen} exact />
+      <Route path='/payment/:id'>
+        <Elements stripe={stripePromise}>
+          <PaymentScreen />
+        </Elements>
+      </Route>
     </Router>
   );
 }

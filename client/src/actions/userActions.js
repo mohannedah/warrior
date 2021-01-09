@@ -1,30 +1,47 @@
 import {
   LOGIN_FAIL,
-  LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGOUT,
+  LOGIN_REQUEST,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  GET_PROFILE_REQUEST,
-  GET_PROFILE_SUCCESS,
-  GET_PROFILE_FAIL,
-  UPDATE_PROFILE_REQUEST,
-  UPDATE_PROFILE_SUCCESS,
-  UPDATE_PROFILE_FAIL,
-  GET_ALL_USERS_REQUEST,
-  GET_ALL_USERS_SUCCESS,
-  GET_ALL_USERS_FAIL,
-  DELETE_USER_SUCCESS,
-  DELETE_USER_REQUEST,
-  DELETE_USER_FAIL,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAIL,
+  LOGOUT,
+  SUBSCRIPE_REQUEST,
+  SUBSCRIPE_SUCCESS,
+  SUBSCRIPE_FAIL,
 } from "../constants/userConstants";
 import axios from "axios";
 
-export const loginUser = (email, password) => async (dispatch, getState) => {
+export const registerUserAction = (email, password, passwordConfirm) => async (
+  dispatch
+) => {
+  try {
+    dispatch({ type: REGISTER_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post(
+      "/api/users/register",
+      {
+        email,
+        password,
+        passwordConfirm,
+      },
+      config
+    );
+    dispatch({ type: REGISTER_SUCCESS, payload: data });
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: error.response.data ? error.response.data.msg : error.message,
+    });
+  }
+};
+
+export const loginUserAction = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
     const config = {
@@ -32,54 +49,16 @@ export const loginUser = (email, password) => async (dispatch, getState) => {
         "Content-Type": "application/json",
       },
     };
-
     const { data } = await axios.post(
       "/api/users/login",
       { email, password },
       config
     );
-
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: data,
-    });
-
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    dispatch({ type: LOGIN_SUCCESS, payload: data });
   } catch (error) {
-    console.error(error.message);
     dispatch({
       type: LOGIN_FAIL,
-      payload: error.response.data.msg
-        ? error.response.data.msg
-        : error.message,
-    });
-  }
-};
-
-export const registerUser = (email, password, name, passwordConfirm) => async (
-  dispatch
-) => {
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    dispatch({ type: REGISTER_REQUEST });
-    const { data } = await axios.post(
-      "/api/users/register",
-      { email, password, name, passwordConfirm },
-      config
-    );
-
-    dispatch({ type: REGISTER_SUCCESS, payload: data });
-  } catch (error) {
-    console.error(error.message);
-    dispatch({
-      type: REGISTER_FAIL,
-      payload: error.response.data.msg
-        ? error.response.data.msg
-        : error.message,
+      payload: error.response.data ? error.response.data.msg : error.message,
     });
   }
 };
@@ -88,55 +67,30 @@ export const logOut = () => (dispatch) => {
   dispatch({ type: LOGOUT });
 };
 
-export const getProfile = (id) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: GET_PROFILE_REQUEST });
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getState().userInfo.user.token}`,
-      },
-    };
-
-    const { data } = await axios.get(`/api/users/${id}`, config);
-    dispatch({ type: GET_PROFILE_SUCCESS, payload: data });
-  } catch (error) {
-    console.error(error.message);
-    dispatch({
-      type: GET_PROFILE_FAIL,
-      payload: error.response.data.msg
-        ? error.response.data.msg
-        : error.message,
-    });
-  }
-};
-
-export const updateProfile = (email, password, name) => async (
+export const subscripeAction = (email, payment_method) => async (
   dispatch,
   getState
 ) => {
   try {
-    dispatch({ type: UPDATE_PROFILE_REQUEST });
+    dispatch({ type: SUBSCRIPE_REQUEST });
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getState().userInfo.user.token}`,
+        authorization: `Bearer ${getState().userInfo.user.token}`,
       },
     };
 
     const { data } = await axios.put(
-      "/api/users/profile",
-      { email, name, password },
+      "/api/users/subscripe",
+      { email, payment_method },
       config
     );
-    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
+
+    dispatch({ type: SUBSCRIPE_SUCCESS, payload: data });
   } catch (error) {
-    console.error(error.message);
     dispatch({
-      type: UPDATE_PROFILE_FAIL,
-      payload: error.response.data.msg
-        ? error.response.data.msg
-        : error.message,
+      type: SUBSCRIPE_FAIL,
+      payload: error.response.data ? error.response.data.msg : error.message,
     });
   }
 };
